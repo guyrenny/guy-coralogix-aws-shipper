@@ -6,22 +6,22 @@ Description: |
   This is a beta release, please report any issues to:
   github.com/coralogix/coralogix-aws-shipper/issues
 Metadata:
-  AWS::ServerlessRepo::Application:
-    Name: coralogix-aws-shipper
-    Description: Send logs to Coralogix.
-    Author: Coralogix
-    SpdxLicenseId: Apache-2.0
-    LicenseUrl: LICENSE
-    ReadmeUrl: README.md
-    Labels:
-      - coralogix
-      - logs
-      - sns
-      - s3
-      - s3_csv
-      - cloudwatch
-      - cloudtrail
-      - vpc
+AWS::ServerlessRepo::Application:
+  Name: coralogix-aws-shipper
+  Description: Send logs to Coralogix.
+  Author: Coralogix
+  SpdxLicenseId: Apache-2.0
+  LicenseUrl: LICENSE
+  ReadmeUrl: README.md
+  Labels:
+    - coralogix
+    - logs
+    - sns
+    - s3
+    - s3_csv
+    - cloudwatch
+    - cloudtrail
+    - vpc
     HomePageUrl: https://coralogix.com
     SemanticVersion: 0.0.2
     SourceCodeUrl: https://github.com/coralogix/coralogix-aws-shipper
