@@ -29,9 +29,13 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    - name: validate
+    - name: Validate Links
       run: |
+        #!/bin/bash
+        set -x
+        
         echo ">> Validating links in Markdown files"
+        
         # Find all Markdown files
         md_files=$(find . -name "*.md")
         
@@ -42,15 +46,20 @@ jobs:
             link=$(echo "$line" | grep -oP '\[.*?\]\(\K.*?(?=\))')
             if [ -n "$link" ]; then
               # Validate the link using curl
-              curl -s -o /dev/null -I -w "%{http_code}" "$link"
-              status_code=$?
-              if [ $status_code -ne 200 ]; then
+              echo "Checking link: $link"
+              http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link")
+              echo "HTTP Status Code: $http_code"
+              if [ $http_code -ne 200 ]; then
                 echo "Invalid link in file: $file"
                 echo "  $line"
               fi
             fi
           done < "$file"
         done
+        
+        echo ">> All links are valid"
+
+      shell: bash
     # - name: Import environment variables from file
     #   run: cat ".github/env" >> $GITHUB_ENV
     # - uses: actions/setup-go@v4
