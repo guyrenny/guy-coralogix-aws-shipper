@@ -11,7 +11,7 @@ Coralogix provides a predefined AWS Lambda function to easily forward your logs 
 
 The `coralogix-aws-shipper` supports forwarding of logs for the following AWS Services:
 
-* [Amazon CloudWatch](https://docs.aws.amazon.com/cloudwatch/)
+* [Amazon CloudWatch](https://docs.aws.amazon.com/cloudwatch/awsd)
 * [AWS CloudTrail](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-log-file-examples.html)
 * [Amazon VPC Flow logs](https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-s3.html)
 * AWS Elastic Load Balancing access logs ([ALB](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html), [NLB](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-access-logs.html) and [ELB](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/access-log-collection.html))
@@ -51,7 +51,7 @@ Please make sure you selecet the AWS region before you deploy
 ### Terraform
 
 If you need to deploy using Terraform, you can use Coralogix Module located in:
-https://github.com/coralogix/terraform-coralogix-aws/tree/master/modules/coralogix-aws-shipper
+https://github.com/coralogix/terraform-coralogix-aws/tree/master/modules/coralogix-aws-shipper23
 
 ## Paramaters 
 
