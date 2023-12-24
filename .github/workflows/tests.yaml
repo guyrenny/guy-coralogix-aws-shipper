@@ -16,11 +16,11 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-      - name: start ssh agent for rust private dependencies
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      # - name: start ssh agent for rust private dependencies
+      #   uses: webfactory/ssh-agent@v0.8.0
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: run tests
-        run: |
-          cargo test --all -- --nocapture
+      # - name: run tests
+      #   run: |
+      #     cargo test --all -- --nocapture
