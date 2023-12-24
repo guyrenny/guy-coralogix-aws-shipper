@@ -28,20 +28,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Import environment variables from file
-      run: cat ".github/env" >> $GITHUB_ENV
-    - uses: actions/setup-go@v4
-      with:
-        go-version: '${{ env.golang-version }}'
-    - uses: actions/cache@v3
-      with:
-        path: .mdoxcache
-        key: mdoxcache
-    - run: make check-docs
-    # - name: Import environment variables from file
-    #   run: |
-    #     MDOX_BINARY=$(shell pwd)/tmp/bin/mdox
-    #     echo "formatting and local/remote link check"
-    #     find . -regex ".*.md" | xargs $(MDOX_BINARY) fmt --links.validate.config-file .mdox.validate.yaml -l --check --soft-wraps 
+      run: |
+        MDOX_BINARY=README.md
+        echo "formatting and local/remote link check"
+        find . -regex ".*.md" | xargs $(MDOX_BINARY) fmt --links.validate.config-file .mdox.validate.yaml -l --check --soft-wraps 
   check-changelog-updates:
     if: "${{ needs.get-label.outputs.labels != ' skip-changelog ' }}"
     runs-on: ubuntu-latest
