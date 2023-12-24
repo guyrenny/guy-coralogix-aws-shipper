@@ -6,8 +6,6 @@
 [![Rust Report Card](https://rust-reportcard.xuri.me/badge/github.com/coralogix/coralogix-aws-shipper)](https://rust-reportcard.xuri.me/report/github.com/coralogix/coralogix-aws-shipper)
 ![Static Badge](https://img.shields.io/badge/status-beta-purple)
 
-
-
 ## Overview
 Coralogix provides a predefined AWS Lambda function to easily forward your logs to the Coralogix platform.
 
