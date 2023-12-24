@@ -38,13 +38,15 @@ jobs:
         # Loop through each Markdown file
         for file in $md_files; do
           # Extract and validate links
+          line_number=0
           while IFS= read -r line; do
+            line_number++
             link=$(echo "$line" | grep -oP '\[.*?\]\(\K.*?(?=\))')
             if [ -n "$link" ]; then
               # Validate the link using curl
               http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link")
               if [ $http_code -ne 200 ] && [ $http_code -ne 000 ] ; then
-                echo "HTTP Status Code: $http_code"
+                echo "HTTP Status Code at line $line_number: $http_code"
                 echo "Invalid link in file: $file"
                 echo "  $line"
               fi
