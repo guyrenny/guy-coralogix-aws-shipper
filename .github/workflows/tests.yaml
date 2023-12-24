@@ -22,16 +22,8 @@ jobs:
         # validate the template file 
       - name: Run cfn-lint
         run: |
-          cfn-lint --template template.yaml --region us-east-1 --ignore-checks W 2> cfn-lint-error.log || true
-          if [ -s cfn-lint-error.log ] && grep -q '[^[:space:]]' "cfn-lint-error.log"; then
-            echo "[INFO] no syntax error in the template"
-          else
-            echo "[ERROR] please fix the template file"
-            cat cfn-lint-error.log
-            exit 1
-          fi
+          cfn-lint --template template.yaml --region us-east-1 --ignore-checks W 
 
-      
       # - name: install rust toolchain
       #   uses: actions-rs/toolchain@v1
       #   with:
