@@ -30,10 +30,16 @@ jobs:
       with:
         fetch-depth: 0
     - name: Import environment variables from file
-      run: |
-        MDOX_BINARY=README.md
-        echo "formatting and local/remote link check"
-        find . -regex ".*.md" | xargs ./README.md
+      run: cat ".github/env" >> $GITHUB_ENV
+    - uses: actions/setup-go@v4
+      with:
+        go-version: '${{ env.golang-version }}'
+    - uses: actions/cache@v3
+      with:
+        path: .mdoxcache
+        key: mdoxcache
+    - name: ls
+      run: ls -a
   check-changelog-updates:
     if: "${{ needs.get-label.outputs.labels != ' skip-changelog ' }}"
     runs-on: ubuntu-latest
