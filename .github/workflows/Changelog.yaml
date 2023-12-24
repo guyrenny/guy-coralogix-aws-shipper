@@ -40,6 +40,7 @@ jobs:
         key: mdoxcache
     - name: ls
       run: ls -a
+    - run: make check-docs
   check-changelog-updates:
     if: "${{ needs.get-label.outputs.labels != ' skip-changelog ' }}"
     runs-on: ubuntu-latest
