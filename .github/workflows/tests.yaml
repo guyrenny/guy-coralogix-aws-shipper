@@ -18,13 +18,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install cfn-lint
-  
+          
+        # validate the template file 
       - name: Run cfn-lint
         run: |
-          cfn-lint --template template.yaml --ignore-checks W  > cfn-lint-error.log || true
-      # validate the file template
-      - name: Display cfn-lint errors
-        run: |
+          cfn-lint --template template.yaml --ignore-checks W  2> cfn-lint-error.log || true
           if [ -s "cfn-lint-error.log" ]; then
             echo "[INFO] no syntx error in the template"
           else
