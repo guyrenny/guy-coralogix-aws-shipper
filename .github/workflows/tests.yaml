@@ -36,7 +36,7 @@ jobs:
             echo "[INFO] no syntax error in the template"
           else
             echo "[ERROR] please fix the template file"
-            echo "$error"
+            echo $error
             exit 1
           fi
       
