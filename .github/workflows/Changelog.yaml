@@ -31,9 +31,7 @@ jobs:
         fetch-depth: 0
     - name: Validate Links
       run: |
-        #!/bin/bash
-        echo ">> Validating links in Markdown files"
-        # Find all Markdown files
+        echo "Validating links in .md files"
         md_files=$(find . -name "*.md")
         # Loop through each Markdown file
         for file in $md_files; do
@@ -42,7 +40,6 @@ jobs:
           while IFS= read -r line; do
             ((line_number++))
             link=$(echo "$line" | grep -oP 'https:\/\/[^[:space:]]*')
-            echo "[INFO] $link"
             if [ -n "$link" ]; then
               # Validate the link using curl
               http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link")
