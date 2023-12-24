@@ -26,10 +26,10 @@ jobs:
       - name: Display cfn-lint errors
         run: |
           if [ -s "cfn-lint-error.log" ]; then
-            echo "no error"
-            cat cfn-lint-error.log
+            echo "[INFO] no syntx error in the template"
           else
-            echo "error"
+            echo "[ERROR] please fir the template file $(cat cfn-lint-error.log)"
+            exit 1
           fi
       
       # - name: install rust toolchain
