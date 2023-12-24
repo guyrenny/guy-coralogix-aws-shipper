@@ -27,6 +27,7 @@ jobs:
         run: |
           if [[ $(cat cfn-lint-error.log) == "" ]]; then
             echo "no error"
+            cat cfn-lint-error.log
           else
             echo "error"
           fi
