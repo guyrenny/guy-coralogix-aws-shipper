@@ -4,23 +4,37 @@ on:
     branches:
       - master
 
-jobs:
+jobs: 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: install rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-          components: rustfmt, clippy
 
-      - name: start ssh agent for rust private dependencies
-        uses: webfactory/ssh-agent@v0.8.0
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: run tests
+          python-version: '3.8'
+  
+      - name: Install dependencies
         run: |
-          cargo test --all -- --nocapture
+          pip install cfn-lint
+  
+      - name: Run cfn-lint
+        run: |
+          cfn-lint --template template.yaml 
+      
+      # - name: install rust toolchain
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     toolchain: stable
+      #     override: true
+      #     components: rustfmt, clippy
+
+      # - name: start ssh agent for rust private dependencies
+      #   uses: webfactory/ssh-agent@v0.8.0
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # - name: run tests
+      #   run: |
+      #     cargo test --all -- --nocapture
