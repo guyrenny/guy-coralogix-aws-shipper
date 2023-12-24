@@ -42,6 +42,7 @@ jobs:
           while IFS= read -r line; do
             ((line_number++))
             link=$(echo "$line" | grep -oP '\[.*?\]\(\K.*?(?=\))')
+            echo "[INFO] $link"
             if [ -n "$link" ]; then
               # Validate the link using curl
               http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link")
