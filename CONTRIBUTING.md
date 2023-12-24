@@ -65,7 +65,7 @@ When you submit your pull request, or you push new commits to it, our automated
 systems will run some checks on your new code. We require that your pull request
 passes these checks, but we also have more criteria than just that before we can
 accept and merge it. If the pull request modifies anything, that could impact 
-Terraform module (https://github.com/coralogix/terraform-coralogix-aws), necessary
+Terraform module, necessary
 PR needs to be created in module repository. For example, a new environment variable
 is added.
 We recommend that you check the following things locally
