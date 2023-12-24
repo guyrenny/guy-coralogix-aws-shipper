@@ -30,9 +30,7 @@ jobs:
     - name: Import environment variables from file
       run: |
         echo "formatting and local/remote link check"
-        find . -regex ".*.md" | xargs $(MDOX_BINARY) fmt --links.validate.config-file .mdox.validate.yaml -l --check --soft-wraps
-  	      
-	        
+        find . -regex ".*.md" | xargs $(MDOX_BINARY) fmt --links.validate.config-file .mdox.validate.yaml -l --check --soft-wraps 
   check-changelog-updates:
     if: "${{ needs.get-label.outputs.labels != ' skip-changelog ' }}"
     runs-on: ubuntu-latest
