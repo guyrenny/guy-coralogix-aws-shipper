@@ -27,7 +27,7 @@ jobs:
           echo $exit_code
           if [ -s cfn-lint-error.log ]; then
             echo "file is empty"
-          else
+          fi
           if [ $exit_code -eq 0 ]; then
             echo "[INFO] no syntax error in the template"
           else
