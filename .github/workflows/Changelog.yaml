@@ -42,10 +42,9 @@ jobs:
             link=$(echo "$line" | grep -oP '\[.*?\]\(\K.*?(?=\))')
             if [ -n "$link" ]; then
               # Validate the link using curl
-              echo "Checking link: $link"
               http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link")
-              echo "HTTP Status Code: $http_code"
               if [ $http_code -ne 200 ]; then
+                echo "HTTP Status Code: $http_code"
                 echo "Invalid link in file: $file"
                 echo "  $line"
               fi
