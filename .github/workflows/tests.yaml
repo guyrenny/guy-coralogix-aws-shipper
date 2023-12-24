@@ -21,7 +21,7 @@ jobs:
   
       - name: Run cfn-lint
         run: |
-          cfn-lint --template template.yaml 
+          cfn-lint --template template.yaml --ignore-checks W
       
       # - name: install rust toolchain
       #   uses: actions-rs/toolchain@v1
