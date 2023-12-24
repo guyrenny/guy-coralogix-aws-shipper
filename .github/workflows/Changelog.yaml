@@ -21,7 +21,21 @@ jobs:
       - name: Get PR labels
         id: pr-labels
         uses: joerick/pr-labels-action@v1.0.8
-        
+  check-docs:
+    runs-on: ubuntu-latest
+    name: Check Documentation formatting and links
+    steps:
+    - uses: actions/checkout@v3
+    - name: Import environment variables from file
+      run: cat ".github/env" >> $GITHUB_ENV
+    - uses: actions/setup-go@v4
+      with:
+        go-version: '${{ env.golang-version }}'
+    - uses: actions/cache@v3
+      with:
+        path: .mdoxcache
+        key: mdoxcache
+    - run: make check-docs
   check-changelog-updates:
     if: "${{ needs.get-label.outputs.labels != ' skip-changelog ' }}"
     runs-on: ubuntu-latest
