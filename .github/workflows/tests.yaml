@@ -25,7 +25,7 @@ jobs:
           cfn-lint --template template.yaml --region us-east-1 --ignore-checks W 2> cfn-lint-error.log || true
           exit_code=$?
           echo $exit_code
-          if [ -s cfn-lint-error.log ]; then
+          if [ -s cfn-lint-error.log ] && grep -q '[^[:space:]]' "cfn-lint-error.log"; then
             echo "file is empty"
           fi
           if [ $exit_code -eq 0 ]; then
