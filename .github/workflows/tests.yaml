@@ -22,13 +22,13 @@ jobs:
         # validate the template file 
       - name: Run cfn-lint
         run: |
-          error=$(cfn-lint --template template.yaml --region us-east-1 --ignore-checks W 2>&1)
+          cfn-lint --template template.yaml --region us-east-1 --ignore-checks W 2> cfn-lint-error.log || true
           exit_code=$?
           if [ $exit_code -eq 0 ]; then
             echo "[INFO] no syntax error in the template"
           else
             echo "[ERROR] please fix the template file"
-            echo "$error"
+            cat cfn-lint-error.log
             exit 1
           fi
 
