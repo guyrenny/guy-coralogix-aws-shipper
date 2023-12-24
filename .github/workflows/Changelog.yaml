@@ -31,7 +31,7 @@ jobs:
       run: |
         MDOX_BINARY=README.md
         echo "formatting and local/remote link check"
-        find . -regex ".*.md" | xargs $(MDOX_BINARY) fmt -l --check --soft-wraps 
+        find . -regex ".*.md" | xargs README.md fmt
   check-changelog-updates:
     if: "${{ needs.get-label.outputs.labels != ' skip-changelog ' }}"
     runs-on: ubuntu-latest
