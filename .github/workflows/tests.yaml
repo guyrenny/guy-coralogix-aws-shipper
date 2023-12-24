@@ -21,7 +21,7 @@ jobs:
   
       - name: Run cfn-lint
         run: |
-          cfn-lint --template template.yaml --ignore-checks W 2> cfn-lint-error.log || true
+          cfn-lint --template template.yaml --ignore-checks W | 2> cfn-lint-error.log || true
       
       - name: Display cfn-lint errors
         run: |
