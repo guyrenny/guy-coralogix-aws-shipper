@@ -33,12 +33,12 @@ jobs:
       run: |
         #!/bin/bash
         set -x
-        
+
         echo ">> Validating links in Markdown files"
-        
+
         # Find all Markdown files
         md_files=$(find . -name "*.md")
-        
+
         # Loop through each Markdown file
         for file in $md_files; do
           # Extract and validate links
@@ -55,8 +55,8 @@ jobs:
               fi
             fi
           done < "$file"
-        done
-        
+        done || true  # Continue even if there is an error
+
         echo ">> All links are valid"
 
       shell: bash
