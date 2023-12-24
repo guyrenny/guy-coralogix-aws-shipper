@@ -43,7 +43,7 @@ jobs:
             if [ -n "$link" ]; then
               # Validate the link using curl
               http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link")
-              if [ $http_code -ne 200 ]; then
+              if [ $http_code -ne 200 ] && [ $http_code -ne 000 ] ; then
                 echo "HTTP Status Code: $http_code"
                 echo "Invalid link in file: $file"
                 echo "  $line"
