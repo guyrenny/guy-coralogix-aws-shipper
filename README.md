@@ -51,7 +51,7 @@ Please make sure you selecet the AWS region before you deploy
 ### Terraform
 
 If you need to deploy using Terraform, you can use Coralogix Module located in:
-https://github.com/coralogix/terraform-coralogix-aws/tree/master/modules/coralogix-aws-shipper23
+https://github.com/coralogix/terraform-coralogix-aws/tree/master/modules/coralogix-aws-shipperrr
 
 ## Paramaters 
 
