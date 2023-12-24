@@ -10,6 +10,7 @@ on:
       - "template.yaml"
       - "requirements.txt"
       - "Makefile"
+      - "*.md"
 
 jobs:
   get-label:
