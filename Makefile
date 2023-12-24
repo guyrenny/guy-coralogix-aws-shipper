@@ -9,7 +9,7 @@ $(TOOLS_BIN_DIR):
 
 $(TOOLING): $(TOOLS_BIN_DIR)
 	@echo Installing tools from .github/tools/tools.go
-	@cat .github/tools/tools.go | grep _ | awk -F'"' '{print $$2}' | GOBIN=$(TOOLS_BIN_DIR) xargs -tI % go install -mod=readonly -modfile=.github/tools/go.mod %
+	@cat .github/tools/tools.go | grep _ | awk -F'"' '{print $$2}' | GOBIN=$(TOOLS_BIN_DIR) xargs -tI % go install -mod=readonly -modfile=.github/tools/tools.go %
 
 
 .PHONY: check-docs
