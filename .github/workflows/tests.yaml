@@ -27,8 +27,7 @@ jobs:
             echo "[INFO] no syntx error in the template"
           else
             echo "[ERROR] please fix the template file"
-            cat cfn-lint-error.log
-            # exit 1
+            exit 1
           fi
       
       # - name: install rust toolchain
