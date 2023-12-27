@@ -22,7 +22,7 @@ jobs:
         id: pr-labels
         uses: joerick/pr-labels-action@v1.0.9
       - name: echo
-        run: echo ${{ github.event.pull_request.labels.*.name }}
+        run: echo ${{ github.event.pull_request.labels }}
   check-changelog-updates:
     if: ${{ github.event.label.name == 'skip-changelog' }}
     runs-on: ubuntu-latest
