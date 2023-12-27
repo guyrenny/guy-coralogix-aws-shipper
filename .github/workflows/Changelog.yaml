@@ -51,7 +51,7 @@ jobs:
               fi
             fi
           done < "$file"
-          done || true  # Continue even if there is an error
+          done || true  # Continue even if there is an errors
           echo ">> All links are valid"
       shell: bash
     # - name: Import environment variables from file
