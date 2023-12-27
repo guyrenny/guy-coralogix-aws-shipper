@@ -43,7 +43,7 @@ jobs:
             link=$(echo "$line" | grep -oP 'https:\/\/[^\s)\]]*')
             if [ -n "$link" ]; then
               # Validate the link using curl
-              http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link" || echo "error")
+              http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link")
               if [ "$http_code" != "200" ] && ["$http_code" != "000" ]; then
                 echo "HTTP Status Code at line $line_number: $http_code"
                 echo "Invalid link in file: $file"
