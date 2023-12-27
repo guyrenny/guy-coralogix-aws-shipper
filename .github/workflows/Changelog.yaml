@@ -51,8 +51,8 @@ jobs:
               fi
             fi
           done < "$file"
-        done || true  # Continue even if there is an error
-echo ">> All links are valid"
+          done || true  # Continue even if there is an error
+          echo ">> All links are valid"
       shell: bash
     # - name: Import environment variables from file
     #   run: cat ".github/env" >> $GITHUB_ENV
