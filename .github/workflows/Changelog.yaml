@@ -21,12 +21,12 @@ jobs:
       - name: Get PR labels
         id: pr-labels
         uses: joerick/pr-labels-action@v1.0.9
-      - name: echo
-        run: |
-          echo "PR Labels:"
-          for label in "${{ github.event.pull_request.labels }}"; do
-            echo "- $label"
-          done
+      # - name: echo
+      #   run: |
+      #     echo "PR Labels:"
+      #     for label in "${{ github.event.pull_request.labels }}"; do
+      #       echo "- $label"
+      #     done
   check-changelog-updates:
     if: contains( github.event.pull_request.labels.*.name, 'bug') != true
     runs-on: ubuntu-latest
