@@ -40,7 +40,7 @@ jobs:
           line_number=0
           while IFS= read -r line; do
             ((line_number++))
-            link=$(echo "$line" | grep -oP 'https:\/\/[^[:space:]]*')
+            link=$(echo "$line" | grep -oP 'https:\/\/[^\s)\]]*')
             if [ -n "$link" ]; then
               # Validate the link using curl
               http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link" || echo "error")
