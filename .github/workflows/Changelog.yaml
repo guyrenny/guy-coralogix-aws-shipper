@@ -28,7 +28,7 @@ jobs:
             echo "- $label"
           done
   check-changelog-updates:
-    if: contains( github.event.pull_request.labels.*.name, 'bug')
+    if: contains( github.event.pull_request.labels.*.name, 'bug') != true
     runs-on: ubuntu-latest
     needs: get-label
     name: Check changelog update
