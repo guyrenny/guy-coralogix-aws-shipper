@@ -54,7 +54,7 @@ jobs:
           done < "$file"
           done || true  # Continue even if there is an errors
           # echo ">> All links are valid"
-          if !$pass_validation;then
+          if [[!$pass_validation]];then
             exit 1
           fi
       shell: bash
