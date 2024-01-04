@@ -43,6 +43,7 @@ jobs:
             link=$(echo "$line" | grep -oP 'https:\/\/[^\s)\]]*')
             if [ -n "$link" ]; then
               # Validate the link using curl
+              echo $link
               http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link")
               if [[ "$http_code" != "200" ]] && [[ "$http_code" != "000" ]] && [[ "$http_code" != "302" ]]; then
                 echo "HTTP Status Code at line $line_number: $http_code"
