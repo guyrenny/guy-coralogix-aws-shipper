@@ -48,7 +48,7 @@ jobs:
                 echo "HTTP Status Code at line $line_number: $http_code"
                 echo "[ERROR] Invalid link in file: $file in line $line"
                 pass_validation=false
-              elif [[ "$http_code" != "200" ]] && [[  "$url" == *"cla-assistant.io/"* ]] && [[  "$url" != "https://cla-assistant.io/coralogix/$GITHUB_REPOSITORY" ]]
+              elif [[ "$http_code" != "200" ]] && [[  "$url" == *"cla-assistant.io/"* ]] && [[  "$url" != "https://cla-assistant.io/coralogix/$GITHUB_REPOSITORY" ]];then
                echo "[INFO] Make sure that the CLA link is current" 
               fi
             fi
