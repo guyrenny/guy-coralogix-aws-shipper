@@ -58,7 +58,7 @@ We require that contributors have signed our Contributor License Agreement (CLA)
 When a contributor submits their first Pull Request, the CLA Bot will step in with a friendly comment on the new pull request, kindly requesting them to sign the [Coralogix's CLA](https://cla-assistant.io/coralogix/coralogix-aws-shipper).
 
 ## Terraform dependencies
-This application has strong dependecies with our Terraform module [Terraform-coralogix-aws](https://github.com/coralogix/terraform-coralogix-aws/tree/master/modules/coralogix-aws-shipper). Please review your PR does not modify anything that has impact on it. For example changing a Variable Name or adding a new one. 
+This application has strong dependecies with our Terraform module [Terraform-coralogix-aws](https://github.com/coralogix/terraform-coralogix-aws/tree/master/module/coralogix-aws-shipper). Please review your PR does not modify anything that has impact on it. For example changing a Variable Name or adding a new one. 
 
 ## Pull Request Checklist
 
