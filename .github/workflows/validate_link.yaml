@@ -14,16 +14,16 @@ on:
 
 jobs:
   check-docs:
-    runs-on: python-latest
+    runs-on: ubuntu-latest
     name: Check Documentation formatting and links
     steps:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    # - name: Set up Python
-    #   uses: actions/setup-python@v2
-    #   with:
-    #     python-version: 3.8
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.10
     
     - name: Install dependencies
       run: |
