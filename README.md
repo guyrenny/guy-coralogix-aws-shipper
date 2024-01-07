@@ -22,6 +22,7 @@ The `coralogix-aws-shipper` supports forwarding of logs for the following AWS Se
 * [Amazon VPC DNS query logs](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-query-logs.html)
 * [AWS WAF](https://docs.aws.amazon.com/waf/latest/developerguide/logging-s3.html)
 * [AWS SNS](https://aws.amazon.com/sns/)
+* [AWS SQS](https://aws.amazon.com/sqs/)
 
 Additionally, you can ingest any generic text, JSON and csv logs stored in your S3 bucket
 
@@ -45,7 +46,7 @@ Log into your AWS account and deploy the CloudFormation Stack with the button be
 ### AWS Serverless Application
 
 The lambda can be deployed by clicking the link below and signing into your AWS account:
-[Deployment link](https://serverlessrepo.aws.amazon.com/applications/eu-central-1/597078901540/Coralogix-aws-shipper)
+[Deployment link](https://serverlessrepo.aws.amazon.com/applications/eu-central-1/597078901540/coralogix-aws-shipper)
 Please make sure you selecet the AWS region before you deploy
 
 ### Terraform
@@ -60,10 +61,10 @@ https://github.com/coralogix/terraform-coralogix-aws/tree/master/modules/coralog
 |---|---|---|---|
 | Application name | The stack name of this application created via AWS CloudFormation. |   | :heavy_check_mark: |
 | IntegrationType | The integration type. Can be one of: S3, CloudTrail, VpcFlow, CloudWatch, S3Csv, Sns' |  S3 | :heavy_check_mark: | 
-| CoralogixRegion | The Coralogix location region, possible options are [Custom, Europe, Europe2, India, Singapore, US, US2] If this value is set to Custom you must specify the Custom Domain to use via the CustomDomain parameter |  Custom | :heavy_check_mark: | 
+| CoralogixRegion | The Coralogix location region, possible options are [Custom, EU1, EU2, AP1, AP2, US, US2] If this value is set to Custom you must specify the Custom Domain to use via the CustomDomain parameter |  Custom | :heavy_check_mark: | 
 | CustomDomain | The Custom Domain. If set, will be the domain used to send telemetry (e.g. cx123.coralogix.com) |   |   |
-| ApplicationName | The [name](https://coralogix.com/docs/application-and-subsystem-names/) of your application. for dynamically value from the log you should use *$.my_log.field* |   | :heavy_check_mark: | 
-| SubsystemName | The [name](https://coralogix.com/docs/application-and-subsystem-names/) of your subsystem. For dynamic value from the log use *$.my_log.field*. For Cloudwatch leave empty to use the loggroup name. For cloudtrail use *$.eventSource* to use the trail source|   |   |
+| ApplicationName | The [name](https://coralogix.com/docs/application-and-subsystem-names/) of your application. For dynamically value check [Advanced section](#advanced)|   | :heavy_check_mark: | 
+| SubsystemName | The [name](https://coralogix.com/docs/application-and-subsystem-names/) of your subsystem. For dynamic value from the check [Advanced section](#advanced). For Cloudwatch leave empty to use the loggroup name.|   |   |
 | ApiKey | Your Coralogix Send Your Data - [API Key](https://coralogix.com/docs/send-your-data-api-key/) which is used to validate your authenticity, This value can be a Coralogix API Key or an AWS Secret Manager ARN that holds the API Key |   | :heavy_check_mark: |
 | StoreAPIKeyInSecretsManager | Store the API key in AWS Secrets Manager.  If this option is set to false, the ApiKey will apeear in plain text as an environment variable in the lambda function console. | True  | :heavy_check_mark: |
 
@@ -75,7 +76,8 @@ https://github.com/coralogix/terraform-coralogix-aws/tree/master/modules/coralog
 | S3KeySuffix | The AWS S3 path suffix to watch. This value is ignored when the SNSTopicArn parameter is provided. | CloudTrail '.json.gz',  VpcFlow '.log.gz' |   |
 | NewlinePattern | Regular expression to detect a new log line for multiline logs from S3 source, e.g., use expression \n(?=\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}\.\d{3}) |   |   |
 | SNSTopicArn | The ARN for the SNS topic that contains the SNS subscription responsible for retrieving logs from Amazon S3 |   |   |
-| CSVDelimiter | Single Character for using as a Delimiter when ingesting CSV (This value is applied when the S3Csv integration type  is selected), e.g. "," or " " | , |   |
+| SQSTopicArn | The ARN for the SQS queue that contains the SQS subscription responsible for retrieving logs from Amazon S3 |   |   |
+| CSVDelimiter | Single Character for using as a Delimiter when ingesting CSV file with header line (This value is applied when the S3Csv integration type  is selected), e.g. "," or " " | , |   |
 
 ### Integration Cloudwatch configuration
 | Parameter | Description | Default Value | Required |
@@ -86,6 +88,11 @@ https://github.com/coralogix/terraform-coralogix-aws/tree/master/modules/coralog
 | Parameter | Description | Default Value | Required |
 |---|---|---|---|
 | SNSIntegrationTopicARN | The ARN of SNS topic to subscribe to retrieving messages |   | :heavy_check_mark: | 
+
+### Integration SQS configuration
+| Parameter | Description | Default Value | Required |
+|---|---|---|---|
+| SQSIntegrationTopicARN | The ARN of SQS queue to subscribe to retrieving messages |   | :heavy_check_mark: |
 
 ### Integration Generic Config (Optional)
 | Parameter | Description | Default Value | Required |
@@ -113,6 +120,14 @@ https://github.com/coralogix/terraform-coralogix-aws/tree/master/modules/coralog
 
 ### AWS PrivateLink
 To use privatelink please forllow the instruction in this [link](https://coralogix.com/docs/coralogix-amazon-web-services-aws-privatelink-endpoints/)
+
+### Dynamic Application and Subsystem Name
+- Json support: 
+-- for dynamically value from the log you should use *$.my_log.field*
+-- For cloudtrail use *$.eventSource* to use the trail source
+- s3 folder: Use the following tag: {{s3_key.*value*}} where value is the folder level, for example:
+    if the file path that triggers the event is AWSLogs/112322232/ELB1/elb.log or AWSLogs/112322232/ELB2/elb.log and you
+    want ELB1 and ELB2 to be the subsystem, you subsystemName shoudl be {{s3_key.3}}
 
 ## Troubleshooting
 

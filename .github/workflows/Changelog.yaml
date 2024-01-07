@@ -10,6 +10,7 @@ on:
       - "template.yaml"
       - "requirements.txt"
       - "Makefile"
+      - "*.md"
 
 jobs:
   get-label:
@@ -26,11 +27,66 @@ jobs:
     name: Check Documentation formatting and links
     steps:
     - uses: actions/checkout@v3
-    - name: Import environment variables from file
+      with:
+        fetch-depth: 0
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    
+    - name: Install dependencies
       run: |
-        	@echo ">> formatting and local/remote link check"
-	        find . -regex ".*.md" | xargs $(MDOX_BINARY) fmt --links.validate.config-file .mdox.validate.yaml -l --check --soft-wraps
+        pip install --upgrade pip
+        npm install -g markdown-link-check
+    
+    - name: Check documentation formatting and links
+      run: |
+        find . -regex ".*\.md" | xargs markdown-link-check
+    # - name: Validate Links
+    #   run: |
+    #     echo "Validating links in .md files"
+    #     md_files=$(find . -name "*.md")
+    #     pass_validation=true
+    #     # Loop through each Markdown file
+    #     for file in $md_files; do
+    #       # Extract and validate links
+    #       line_number=0
+    #       while IFS= read -r line; do
+    #         ((line_number++))
+    #         link=$(echo "$line" | grep -oP 'https:\/\/[^\s)\]]*')
+    #         if [ -n "$link" ]; then
+    #           # Validate the link using curl
+    #           http_code=$(curl -s -o /dev/null -I -w "%{http_code}" "$link")
+    #           if [[ "$http_code" != "200" ]] && [[ "$http_code" != "000" ]] && [[ "$http_code" != "302" ]]; then
+    #             echo "HTTP Status Code at line $line_number: $http_code"
+    #             echo "[ERROR] Invalid link in file: $file in line $line_number"
+    #             echo "The Line: $line"
+    #             pass_validation=false
+    #           elif [[ "$url" =~ "cla-assistant.io/" ]] && [[  "$url" != "https://cla-assistant.io/coralogix/$GITHUB_REPOSITORY" ]];then
+    #            echo "[INFO] Make sure that the CLA link is current" 
+    #           fi
+    #         fi
+    #       done < "$file"
+    #       done || true  # Continue even if there is an errors
+    #       # echo ">> All links are valid"
+    #       if [ "$pass_validation" == false ]; then
+    #         exit 1
+    #       fi
+    #   shell: bash
+    # - name: Import environment variables from file
+    #   run: cat ".github/env" >> $GITHUB_ENV
+    # - uses: actions/setup-go@v4
+    #   with:
+    #     go-version: '${{ env.golang-version }}'
+    # - uses: actions/cache@v3
+    #   with:
+    #     path: .mdoxcache
+    #     key: mdoxcache
+    # - name: ls
+    #   run: ls -a
+    # - run: make check-docs
 
+    
   check-changelog-updates:
     if: "${{ needs.get-label.outputs.labels != ' skip-changelog ' }}"
     runs-on: ubuntu-latest
