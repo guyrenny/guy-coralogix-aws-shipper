@@ -1,0 +1,35 @@
+name: Changelog
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [master]
+    paths:
+      - "src/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "template.yaml"
+      - "requirements.txt"
+      - "Makefile"
+      - "*.md"
+
+jobs:
+  check-docs:
+    runs-on: python-latest
+    name: Check Documentation formatting and links
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    # - name: Set up Python
+    #   uses: actions/setup-python@v2
+    #   with:
+    #     python-version: 3.8
+    
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        npm install -g markdown-link-check
+    
+    - name: Check documentation formatting and links
+      run: |
+        find . -regex ".*\.md" | xargs markdown-link-check
