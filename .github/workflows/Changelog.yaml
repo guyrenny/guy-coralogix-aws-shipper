@@ -36,6 +36,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        pip install --upgrade pip
         pip install mdformat mdlinkcheck
 
     - name: Check documentation formatting and links
