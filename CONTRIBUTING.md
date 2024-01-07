@@ -2,6 +2,7 @@
 
 * [New Contributor Guide](#contributing-guide)
   * [Ways to Contribute](#ways-to-contribute)
+  * [Find an Issue](#find-an-issue)
   * [Ask for Help](#ask-for-help)
   * [Pull Request Lifecycle](#pull-request-lifecycle)
   * [Development Environment Setup](#development-environment-setup)
@@ -54,7 +55,7 @@ You Must have Cargo and Cargo-lambda installed and configured.
 
 We require that contributors have signed our Contributor License Agreement (CLA).
 
-When a contributor submits their first Pull Request, the CLA Bot will step in with a friendly comment on the new pull request, kindly requesting them to sign the [Coralogix's CLA](https://cla-assistant.io/coralogix/coralogix-aws-shipper1233).
+When a contributor submits their first Pull Request, the CLA Bot will step in with a friendly comment on the new pull request, kindly requesting them to sign the [Coralogix's CLA](https://cla-assistant.io/coralogix/coralogix-aws-shipper).
 
 ## Terraform dependencies
 This application has strong dependecies with our Terraform module [Terraform-coralogix-aws](https://github.com/coralogix/terraform-coralogix-aws/tree/master/modules/coralogix-aws-shipper). Please review your PR does not modify anything that has impact on it. For example changing a Variable Name or adding a new one. 
@@ -65,7 +66,7 @@ When you submit your pull request, or you push new commits to it, our automated
 systems will run some checks on your new code. We require that your pull request
 passes these checks, but we also have more criteria than just that before we can
 accept and merge it. If the pull request modifies anything, that could impact 
-Terraform module, necessary
+Terraform module (https://github.com/coralogix/terraform-coralogix-aws), necessary
 PR needs to be created in module repository. For example, a new environment variable
 is added.
 We recommend that you check the following things locally
