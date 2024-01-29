@@ -10,10 +10,8 @@ on:
   workflow_dispatch:
 
 env:
-  AWS_DEFAULT_REGION: eu-central-1
-  AWS_SERVERLESS_BUCKET: coralogix-serverless-repo
+  AWS_SERVERLESS_BUCKET: gr-integrations-aws-testing
   AWS_S3_PREFIX: coralogix-aws-shipper
-  REPO_BUCKET_PREFIX: coralogix-serverless-repo
 
 jobs:
   check_version:
@@ -51,18 +49,6 @@ jobs:
 
           set +xv
 
-      - name: create tag
-        if: env.updated == 'true'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/tags/${{ env.current_version }}',
-              sha: context.sha
-            })
-
   build:
     name: build
     needs: check_version
@@ -76,7 +62,6 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - uses: actions/setup-python@v4
         with:
@@ -105,7 +90,7 @@ jobs:
         run: |
           sam package \
             --s3-bucket ${{ env.AWS_SERVERLESS_BUCKET }} \
-            --s3-prefix ${{ env.AWS_S3_PREFIX }} \
+            --s3-prefix manager \
             --output-template-file packaged.yaml
 
       - name: store
@@ -126,7 +111,6 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: download
         uses: actions/download-artifact@v3
@@ -140,5 +124,5 @@ jobs:
         run: |
           aws s3 cp \
             $(yq -r '.Resources | to_entries | .[] | select(.key == "LambdaLayer" or .key == "LambdaFunctionDefault") | .value.Properties | to_entries | .[] | select(.key == "ContentUri" or .key == "CodeUri") | .value' packaged.yaml) \
-            s3://${{ env.AWS_SERVERLESS_BUCKET }}-${{ env.AWS_DEFAULT_REGION }}/coralogix-aws-shipper.zip
+            s3://${{ env.AWS_SERVERLESS_BUCKET }}/coralogix-aws-shipper.zip
 
