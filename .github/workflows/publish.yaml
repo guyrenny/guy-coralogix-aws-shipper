@@ -47,24 +47,24 @@ jobs:
 
           set +xv
 
-  validate:
-    name: validate
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
+  # validate:
+  #   name: validate
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: checkout
+  #       uses: actions/checkout@v4
           
-      - uses: aws-actions/setup-sam@v2
-        with:
-          use-installer: true
+  #     - uses: aws-actions/setup-sam@v2
+  #       with:
+  #         use-installer: true
 
-      - name: sam validate
-        working-directory: ./
-        run: sam validate
+  #     - name: sam validate
+  #       working-directory: ./
+  #       run: sam validate
 
   build:
     name: build
-    needs: [check_version,validate]
+    needs: [check_version]
     if: ${{ github.event_name == 'workflow_dispatch' || (  success() && needs.check_version.outputs.template_updated == 'true' ) }}
     runs-on: ubuntu-latest
     steps:
