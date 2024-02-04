@@ -71,11 +71,11 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
-      - uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: "us-east-1"
+      # - uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: "us-east-1"
 
       - uses: actions/setup-python@v4
         with:
@@ -87,31 +87,31 @@ jobs:
         with:
           use-installer: true
 
-      - name: start ssh agent for rust private dependencies
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      # - name: start ssh agent for rust private dependencies
+      #   uses: webfactory/ssh-agent@v0.8.0
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: install protobuf compiler
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y protobuf-compiler
+      # - name: install protobuf compiler
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y protobuf-compiler
 
-      - name: sam build
-        run: sam build
+      # - name: sam build
+      #   run: sam build
 
-      - name: package
-        run: |
-          sam package \
-            --s3-bucket ${{ env.AWS_SERVERLESS_BUCKET }} \
-            --s3-prefix manager \
-            --output-template-file packaged.yaml
+      # - name: package
+      #   run: |
+      #     sam package \
+      #       --s3-bucket ${{ env.AWS_SERVERLESS_BUCKET }} \
+      #       --s3-prefix manager \
+      #       --output-template-file packaged.yaml
 
-      - name: store
-        uses: actions/upload-artifact@v3
-        with:
-          name: packaged.yaml
-          path: packaged.yaml
+      # - name: store
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: packaged.yaml
+      #     path: packaged.yaml
 
   publish:
     name: publish
@@ -120,19 +120,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: "us-east-1"
+      - name: test
+        run: echo "123"
+      # - uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: "us-east-1"
 
-      - name: download
-        uses: actions/download-artifact@v3
-        with:
-          name: packaged.yaml
+      # - name: download
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: packaged.yaml
 
-      - name: publish
-        run: sam publish --template packaged.yaml
+      # - name: publish
+      #   run: sam publish --template packaged.yaml
 
       # - name: store
       #   run: |
