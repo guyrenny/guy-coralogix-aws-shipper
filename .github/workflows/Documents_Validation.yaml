@@ -26,5 +26,5 @@ jobs:
     
     - name: Check documentation formatting and links
       run: |
-        find . -regex ".*\.md" -exec markdown-link-check
+        find . -regex ".*\.md" | xargs markdown-link-check
 
